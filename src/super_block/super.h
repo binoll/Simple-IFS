@@ -2,50 +2,57 @@
 
 #include <stdint.h>
 #include <time.h>
+#include "../inode_table/inode.h"
 
-#define FS_MAGIC 0x53494653 // "SIFS" - Simple Inode File System
-#define FS_NAME "SIFS v1.0"
-#define MAX_FS_NAME 32
-#define DEFAULT_BLOCK_SIZE 1024
-#define DEFAULT_INODE_SIZE 128
-#define SIFS_DEBUG
+#define FS_MAGIC 0x53494653                         // Магическое число ФС (SIFS)
+#define FS_NAME "SIFS v1.0"                         // Название файловой системы
+#define MAX_FS_NAME 32                              // Максимальная длина имени ФС
+#define DEFAULT_BLOCK_SIZE 2048                     // Стандартный размер блока (2 КБ)
+#define DEFAULT_INODE_SIZE sizeof(struct inode)     // Размер inode по умолчанию
+#define INODES_PER_BLOCK(block_size, inode_size) \
+    ((block_size) / (inode_size))                   // Расчет максимального количества inode в блоке
 
+// Структура суперблока
 struct superblock {
-  // Идентификация
-  uint32_t magic; // Всегда SIFS_MAGIC
-  char fs_name[MAX_FS_NAME]; // "SIFS"
+    // Идентификация
+    uint32_t magic;                                 // Магическое число
+    char fs_name[MAX_FS_NAME];                      // Имя ФС
 
-  // Геометрия
-  uint32_t block_size; // Размер блока
-  uint32_t inode_size; // Размер одного inode
+    // Геометрия
+    uint32_t block_size;                            // Размер блока в байтах
+    uint32_t inode_size;                            // Размер inode в байтах
 
-  // Управление ресурсами
-  uint32_t inode_count; // Общее количество inode
-  uint32_t free_inodes; // Общее количество свободных inode
-  uint32_t block_count; // Общее количество блоков
-  uint32_t free_blocks; // Общее количество свободных блоков
+    // Расположение структур
+    uint32_t first_inode_bitmap_block;              // Стартовый блок битмапа inode
+    uint32_t first_block_bitmap_block;              // Стартовый блок битмапа блоков
+    uint32_t first_inode_table_block;               // Стартовый блок таблицы inode
+    uint32_t first_block_data;                      // Стартовый блок области данных
 
-  // Расположение ключевых структур
-  uint32_t inode_bitmap_block; // Стартовый блок битмапа inode
-  uint32_t block_bitmap_block; // Стартовый блок битмапа блоков
-  uint32_t inode_table_block; // Стартовый блок таблицы inode
-  uint32_t first_data_block; // Первый блок данных
+    // Ресурсы
+    uint32_t count_inodes;                          // Общее количество inode
+    uint32_t count_free_inodes;                     // Количество свободных inode
+    uint32_t count_blocks;                          // Общее количество блоков
+    uint32_t count_free_blocks;                     // Количество свободных блоков
 
-  // Корневой каталог
-  uint32_t root_inode; // Inode корневого каталога (всегда 1)
+    // Размеры областей
+    uint32_t count_inode_bitmap_blocks;             // Блоков под битмап inode
+    uint32_t count_block_bitmap_blocks;             // Блоков под битмап блоков
+    uint32_t count_inode_table_blocks;              // Блоков под таблицу inode
+    uint32_t count_blocks_data;                     // Блоков данных
 
-  // Состояние
-  time_t last_mount; // Время последнего монтирования
-  uint8_t clean_shutdown; // Флаг корректного размонтирования
+    // Корневой каталог
+    uint32_t root_inode;                            // Inode корневого каталога
+
+    // Состояние
+    time_t last_mount;                              // Время последнего монтирования
+    uint8_t clean_shutdown;                         // Флаг корректного завершения (1 = да)
 };
 
-// Валидация суперблока
-extern static inline uint8_t sb_valid(const struct superblock* sb);
+// Проверка валидности суперблока по магическому числу
+static inline uint8_t superblock_valid(const struct superblock* sb);
 
-// Расчет блоков для битовой карты
-extern static inline uint32_t bitmap_blocks(uint32_t bits, uint32_t block_size);
+// Расчет блоков для хранения битовой карты
+static inline uint32_t get_bitmap_blocks(uint32_t bits, uint32_t block_size);
 
-// Инициализация суперблока
-extern static inline void init_superblock(struct superblock* sb,
-                                          uint32_t total_blocks,
-                                          uint32_t inode_count);
+// Инициализация суперблока для нового раздела
+static inline void init_superblock(struct superblock* sb, uint32_t space_size);
