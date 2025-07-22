@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../super_block/super.h"
+#include "../superblock/superblock.h"
 #include <stdbool.h>
 
 // Рассчитывает смещение в битовой карте для указанного inode

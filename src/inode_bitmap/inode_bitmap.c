@@ -11,7 +11,6 @@ static inline void get_bitmap_offset(uint32_t inode_idx,
   // Бит в байте = остаток от деления индекса на 8
   *bit_offset = inode_idx % 8;
 
-  // Отладочный вывод
   sifs_debug("Смещение в битмапе: inode_idx=%u, байт=%u, бит=%u\n",
              inode_idx, *byte_offset, *bit_offset);
 }
@@ -26,7 +25,6 @@ void inode_bitmap_init(struct superblock* sb, uint8_t* bitmap) {
   sifs_debug("Размер битмапа: %u байт (%u блоков)\n", bitmap_size,
              bitmap_blocks);
 
-  // Обнуление всей битовой карты (все inode свободны)
   memset(bitmap, 0, bitmap_size);
   sifs_debug("Битовая карта обнулена\n");
 

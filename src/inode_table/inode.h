@@ -87,5 +87,5 @@ extern void inode_update_atime(struct inode* node);
 extern void inode_update_mtime(struct inode* node);
 
 // Проверяет права доступа для указанного пользователя/группы
-extern int32_t inode_check_permission(const struct inode* node, uint32_t uid,
-                          uint32_t gid, int32_t mode);
+extern bool inode_check_permission(const struct inode* node, uint32_t uid,
+                          uint32_t gid, uint32_t mode);

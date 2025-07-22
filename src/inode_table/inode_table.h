@@ -1,7 +1,7 @@
 #pragma once
 
 #include "inode.h"
-#include "../super_block/super.h"
+#include "../superblock/superblock.h"
 #include <stdbool.h>
 
 // Инициализирует таблицу inode (вызывается при создании ФС)

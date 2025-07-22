@@ -5,7 +5,6 @@
 #include <stdbool.h>
 
 void init_inode(struct inode* node, uint32_t mode, uint32_t uid, uint32_t gid) {
-    // Обнуление структуры
     memset(node, 0, sizeof(struct inode));
 
     // Установка обязательных полей
@@ -23,13 +22,11 @@ void init_inode(struct inode* node, uint32_t mode, uint32_t uid, uint32_t gid) {
     node->mtime = now;             // Время последнего изменения
     node->ctime = now;             // Время создания/изменения статуса
 
-    // Логирование операции
     sifs_debug("Инициализирован %s: права=%03o, uid=%u, gid=%u, ссылок=%u\n",
                inode_type_str(node), mode & 0777, uid, gid, node->links);
 }
 
 bool inode_valid(const struct inode* node) {
-    // Проверка магического числа (должно совпадать с INODE_MAGIC)
     if (node->magic != INODE_MAGIC) {
         sifs_debug("Некорректное магическое число inode: 0x%08X (ожидалось 0x%08X)\n",
                    node->magic, INODE_MAGIC);
@@ -53,7 +50,6 @@ bool inode_valid(const struct inode* node) {
 }
 
 const char* inode_type_str(const struct inode* node) {
-    // Определение типа файла по младшим битам режима
     switch (node->mode & 0x0F) {
         case S_IFREG: return "файл";        // Обычный файл
         case S_IFDIR: return "директория";  // Каталог
@@ -72,7 +68,6 @@ uint32_t inode_block_count(const struct inode* node, uint32_t block_size) {
         total_blocks++;
     }
 
-    // Логирование информации о блоках
     sifs_debug("Расчет блоков: %u блоков данных + %u косвенный = %u всего\n",
                data_blocks, (data_blocks > DIRECT_BLOCKS) ? 1 : 0, total_blocks);
 
