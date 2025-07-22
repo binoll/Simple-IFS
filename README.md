@@ -2,7 +2,8 @@
 
 ## Overview
 
-SIFS - simple inode file system. The FS is implemented using an inode (index node).
+SIFS - simple inode file system. The FS is implemented using an inode (index node). 
+The FS is written to a file.
 
 ## Dependencies
 
