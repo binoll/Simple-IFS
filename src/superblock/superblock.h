@@ -49,10 +49,10 @@ struct superblock {
 };
 
 // Проверка валидности суперблока по магическому числу
-static inline uint8_t superblock_valid(const struct superblock* sb);
+extern uint8_t superblock_valid(const struct superblock* sb);
 
 // Расчет блоков для хранения битовой карты
-static inline uint32_t get_bitmap_blocks(uint32_t bits, uint32_t block_size);
+extern uint32_t get_bitmap_blocks(uint32_t bits, uint32_t block_size);
 
 // Инициализация суперблока для нового раздела
-static inline void init_superblock(struct superblock* sb, uint32_t space_size);
+extern void init_superblock(struct superblock* sb, uint32_t space_size);

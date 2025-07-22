@@ -2,13 +2,13 @@
 #include <string.h>
 #include "../debug/debug.h"
 
-static inline uint8_t superblock_valid(const struct superblock* sb) {
+extern uint8_t superblock_valid(const struct superblock* sb) {
   uint8_t valid = sb->magic == FS_MAGIC;
   sifs_debug("Проверка суперблока: %s\n", valid ? "валиден" : "невалиден");
   return valid;
 }
 
-static inline uint32_t get_bitmap_blocks(const uint32_t bits,
+extern uint32_t get_bitmap_blocks(const uint32_t bits,
                                          const uint32_t block_size) {
   uint32_t blocks = (bits + block_size * 8 - 1) / (block_size * 8);
   sifs_debug("Расчет блоков битмапа: биты=%u, размер_блока=%u, результат=%u\n",
@@ -16,7 +16,7 @@ static inline uint32_t get_bitmap_blocks(const uint32_t bits,
   return blocks;
 }
 
-static inline void init_superblock(struct superblock* sb,
+extern void init_superblock(struct superblock* sb,
                                    const uint32_t space_size) {
     const uint32_t block_size = DEFAULT_BLOCK_SIZE;
     const uint32_t inode_size = DEFAULT_INODE_SIZE;
