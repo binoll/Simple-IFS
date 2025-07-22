@@ -51,10 +51,10 @@ int32_t mkfs(const char* filename, uint32_t size) {
     off_t offset = sb.block_size; // После суперблока
 
     image_write(inode_bitmap, inode_bitmap_size, offset);
-    offset += inode_bitmap_size;
+    offset += (off_t)inode_bitmap_size;
 
     image_write(block_bitmap, block_bitmap_size, offset);
-    offset += block_bitmap_size;
+    offset += (off_t)block_bitmap_size;
 
     image_write(inode_table, inode_table_size, offset);
 

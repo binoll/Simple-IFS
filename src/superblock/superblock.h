@@ -7,7 +7,7 @@
 #define FS_MAGIC 0x53494653                         // Магическое число ФС (SIFS)
 #define FS_NAME "SIFS v1.0"                         // Название файловой системы
 #define MAX_FS_NAME 32                              // Максимальная длина имени ФС
-#define DEFAULT_BLOCK_SIZE 2048                     // Стандартный размер блока (2 КБ)
+#define DEFAULT_BLOCK_SIZE 512                      // Стандартный размер блока (2 КБ)
 #define DEFAULT_INODE_SIZE sizeof(struct inode)     // Размер inode по умолчанию
 #define INODES_PER_BLOCK(block_size, inode_size) \
     ((block_size) / (inode_size))                   // Расчет максимального количества inode в блоке
