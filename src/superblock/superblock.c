@@ -30,7 +30,7 @@ static inline void init_superblock(struct superblock* sb,
         return;
     }
 
-    // Эмпирическое правило: 1 inode на 4 блока данных
+    // 1 inode на 4 блока данных
     uint32_t inode_count = total_blocks / 4;
     if (inode_count < 2) inode_count = 2;  // Минимум 2 inode
 
