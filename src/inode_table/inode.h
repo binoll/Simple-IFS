@@ -8,11 +8,6 @@
 #define DIRECT_BLOCKS 12          // Количество прямых указателей на блоки в inode
 #define INODE_MAGIC 0x494E4F44    // Магическое число "INOD"
 
-// Типы файлов (битовые флаги)
-#define S_IFREG  0x01             // Обычный файл
-#define S_IFDIR  0x02             // Каталог
-#define S_IFLNK  0x04             // Символическая ссылка
-
 // Маска типа файла (старшие 4 бита)
 #define S_IFMT  0xF000  // Маска типа файла
 

@@ -20,7 +20,7 @@ extern bool write_inode(struct superblock* sb,
                         const struct inode* node);
 
 // Рассчитывает позицию inode в таблице
-extern static inline void get_inode_position(struct superblock* sb,
+extern void get_inode_position(struct superblock* sb,
                                              uint32_t inode_idx,
                                              uint32_t* block_offset,
                                              uint32_t* byte_offset);

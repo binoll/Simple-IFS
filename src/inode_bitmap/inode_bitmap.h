@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 // Рассчитывает смещение в битовой карте для указанного inode
-extern static inline void get_bitmap_offset(uint32_t inode_idx,
+extern void get_bitmap_offset(uint32_t inode_idx,
                                             uint32_t* byte_offset,
                                             uint8_t* bit_offset);
 

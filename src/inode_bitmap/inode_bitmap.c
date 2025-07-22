@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../debug/debug.h"
 
-static inline void get_bitmap_offset(uint32_t inode_idx,
+void get_bitmap_offset(uint32_t inode_idx,
                                      uint32_t* byte_offset,
                                      uint8_t* bit_offset) {
   // Байтовое смещение = индекс inode / 8 (целочисленное деление)

@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../debug/debug.h"
 
-static inline void get_block_bitmap_offset(uint32_t block_idx,
+void get_block_bitmap_offset(uint32_t block_idx,
                                           uint32_t* byte_offset,
                                           uint8_t* bit_offset) {
   *byte_offset = block_idx / 8;

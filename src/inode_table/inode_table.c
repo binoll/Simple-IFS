@@ -86,7 +86,7 @@ bool write_inode(struct superblock* sb,
     return true;
 }
 
-static inline void get_inode_position(struct superblock* sb,
+void get_inode_position(struct superblock* sb,
                                       uint32_t inode_idx,
                                       uint32_t* block_offset,
                                       uint32_t* byte_offset) {
