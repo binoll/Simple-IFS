@@ -10,3 +10,17 @@ The FS is written to a file.
 ```bash
 sudo apt install make gcc -y
 ```
+
+
+## Build
+From the root of the repository, run following commands:
+
+```bash
+make
+```
+
+## Run
+
+```bash
+./build/sifs
+```
